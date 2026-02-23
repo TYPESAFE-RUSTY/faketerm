@@ -50,24 +50,24 @@ check out my portfolio
 
 ## gotcha's
 
-[ ] commands implemented here are generous (do not fail if unnecessary args are passed)
+- [ ] commands implemented here are generous (do not fail if unnecessary args are passed)
 
 ## pro's 
 
 > list of implemented commands
 
-[x] ls
-[x] cd
-[x] pwd
-[x] whoami
-[x] echo
-[x] man
-[x] cat
-[x] touch
-[x] rm
-[x] mkdir
-[x] rmdir
-[ ] figlet
+- [x] ls
+- [x] cd
+- [x] pwd
+- [x] whoami
+- [x] echo
+- [x] man
+- [x] cat
+- [x] touch
+- [x] rm
+- [x] mkdir
+- [x] rmdir
+- [ ] figlet
 
 ## future plans
 - implement raw mode or something similar
