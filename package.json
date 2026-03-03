@@ -1,6 +1,6 @@
 {
   "name": "faketerm",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A cross-platform virtual terminal and in-memory file system (VFS) with custom command support.",
   "author": "Typesafe-Rusty",
   "repository": {
