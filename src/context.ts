@@ -13,16 +13,16 @@ export interface TerminalContext {
   commandHistoryLength: number;
   commandHistory: string[];
   // command registry (similar to path variable ig)
-  commandRegistry: Map<string, exec>;
+  commandRegistry: Map<string, () => exec>;
 }
 
 export const initContext: TerminalContext = {
   shellName: "fake-sh",
-  currentUser: "rusty",
+  currentUser: "Typesafe-Rusty",
   fileSystem: rootNode,
   currentNodeRef: rootNode,
   currentWorkingDirectory: rootDirectory,
   commandHistoryLength: 10,
   commandHistory: [],
-  commandRegistry: new Map<string, exec>(),
+  commandRegistry: new Map<string, () => exec>(),
 };

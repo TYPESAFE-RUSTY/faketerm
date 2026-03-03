@@ -23,17 +23,17 @@ export class fakeTerminal {
   private context: TerminalContext = initContext;
 
   public constructor() {
-    this.context.commandRegistry.set("ls", new ls());
-    this.context.commandRegistry.set("cd", new cd());
-    this.context.commandRegistry.set("pwd", new pwd());
-    this.context.commandRegistry.set("whoami", new whoami());
-    this.context.commandRegistry.set("echo", new echo());
-    this.context.commandRegistry.set("man", new man());
-    this.context.commandRegistry.set("cat", new cat());
-    this.context.commandRegistry.set("touch", new touch());
-    this.context.commandRegistry.set("rm", new rm());
-    this.context.commandRegistry.set("mkdir", new mkdir());
-    this.context.commandRegistry.set("rmdir", new rmdir());
+    this.registerCommand("ls", () => new ls());
+    this.registerCommand("cd", () => new cd());
+    this.registerCommand("pwd", () => new pwd());
+    this.registerCommand("whoami", () => new whoami());
+    this.registerCommand("echo", () => new echo());
+    this.registerCommand("man", () => new man());
+    this.registerCommand("cat", () => new cat());
+    this.registerCommand("touch", () => new touch());
+    this.registerCommand("rm", () => new rm());
+    this.registerCommand("mkdir", () => new mkdir());
+    this.registerCommand("rmdir", () => new rmdir());
   }
 
   public setUser(name: string) {
@@ -44,12 +44,14 @@ export class fakeTerminal {
     this.context.shellName = shellName;
   }
 
-  public registerCommand(commandName: string, command: exec): void {
+  public registerCommand(commandName: string, command: () => exec): void {
     this.context.commandRegistry.set(commandName, command);
   }
 
   public getRegisteredCommandClass(commandName: string): exec | undefined {
-    return this.context.commandRegistry.get(commandName);
+    const factory = this.context.commandRegistry.get(commandName);
+    if (!factory) return undefined;
+    return factory();
   }
 
   public getRegisteredCommands(): string[] {
@@ -113,10 +115,11 @@ export class fakeTerminal {
         );
         continue;
       }
+      const commandClass = currentCommand();
 
-      currentCommand.setTerminalContext(this.context);
-      currentCommand.stdin = response.stdout();
-      response = currentCommand.run(args.split(" "));
+      commandClass.setTerminalContext(this.context);
+      commandClass.stdin = response.stdout();
+      response = commandClass.run(args.split(" "));
     }
 
     return response;
