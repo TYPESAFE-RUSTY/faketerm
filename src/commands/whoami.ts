@@ -2,11 +2,12 @@ import { exec } from "../command.js";
 import { commandOutput, ExitCode } from "../commandOutput.js";
 
 export class whoami extends exec {
-  parse(_args: string[]): void {
+  protected parse(_args: string[]): void {
     // ignore any  args
   }
 
-  run(): commandOutput {
+  run(args: string[]): commandOutput {
+    this.parse(args);
     return new commandOutput(ExitCode.EXIT_SUCCESS, this.context.currentUser);
   }
 

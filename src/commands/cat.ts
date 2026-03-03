@@ -18,7 +18,7 @@ const defaultCatOption: CatOptions = {
 
 export class cat extends exec {
   options: CatOptions = defaultCatOption;
-  parse(args: string[]): void {
+  protected parse(args: string[]): void {
     const opts = mri(args);
 
     this.options.target = opts._[0] || "";
@@ -32,14 +32,14 @@ export class cat extends exec {
     if (this.options.targetFileName === "") throw "no such file";
 
     const helper = new cd();
-    helper.parse([this.options.targetDirPath]);
     const targetDirectory: FileNode =
-      helper.getTargetDir() || this.context.currentNodeRef;
+      helper.getTargetDir([this.options.targetDirPath]) ||
+      this.context.currentNodeRef;
 
     const file = targetDirectory.nodes.find(
       (node) =>
         node.type === FileNodeType.file &&
-        this.options.targetFileName === `${node.name}.${node.ext}`,
+        this.options.targetFileName === `${node.name || ""}.${node.ext || ""}`,
     );
 
     if (!file) throw "no such file";
@@ -47,7 +47,10 @@ export class cat extends exec {
     return file.content || "";
   }
 
-  run(): commandOutput {
+  run(args: string[]): commandOutput {
+    // parse args and run command
+    this.parse(args);
+
     if (this.stdin) {
       return new commandOutput(ExitCode.EXIT_SUCCESS, this.stdin);
     }

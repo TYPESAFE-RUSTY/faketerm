@@ -35,21 +35,6 @@ export function parseFileNode(input: string) {
   return fileSystemRoot;
 }
 
-// is there a way to do this without mutating original node??
-// function removeParentNode(node: FileNode) {
-//   const dirs = node.nodes.filter((_) => _.type === FileNodeType.directory);
-
-//   dirs.forEach((dir) => {
-//     dir.parentNode = null;
-//     removeParentNode(dir);
-//   });
-// }
-
-// export function serializeFileNode(input: FileNode): FileNode {
-//   removeParentNode(input);
-//   return input;
-// }
-
 // basic constant utilities
 export const rootDirectory = "~";
 export const rootNode: FileNode = {

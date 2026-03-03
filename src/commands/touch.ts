@@ -23,7 +23,7 @@ const touchDefaults: TouchOptions = {
 export class touch extends exec {
   options: TouchOptions = touchDefaults;
 
-  parse(args: string[]): void {
+  protected parse(args: string[]): void {
     const opts = mri(args);
     this.options.target = opts._[0] || "";
     let tokens = this.options.target.split("/");
@@ -34,10 +34,11 @@ export class touch extends exec {
     this.options.targetFileDir = tokens.join("/");
   }
 
-  run(): commandOutput {
+  run(args: string[]): commandOutput {
+    this.parse(args);
+
     const command = new cd();
-    command.parse([this.options.targetFileDir]);
-    const targetNode = command.getTargetDir();
+    const targetNode = command.getTargetDir([this.options.targetFileDir]);
 
     if (!targetNode) {
       return new commandOutput(

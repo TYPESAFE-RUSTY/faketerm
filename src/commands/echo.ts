@@ -5,11 +5,13 @@ import { commandOutput, ExitCode } from "../commandOutput";
 export class echo extends exec {
   options: string[] = [];
 
-  parse(args: string[]): void {
+  protected parse(args: string[]): void {
     this.options = mri(args)._;
   }
 
-  run(): commandOutput {
+  run(args: string[]): commandOutput {
+    this.parse(args);
+
     return new commandOutput(
       ExitCode.EXIT_SUCCESS,
       this.options.map((elem) => elem).join(" "),

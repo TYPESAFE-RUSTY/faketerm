@@ -22,7 +22,7 @@ const cdOptionDefault: CdOptions = {
 export class cd extends exec {
   options: CdOptions = cdOptionDefault;
 
-  parse(args: string[]): void {
+  protected parse(args: string[]): void {
     const opts = mri(args);
     // if named args / more args passed return error
 
@@ -68,7 +68,9 @@ export class cd extends exec {
     this.travelToDir(target);
   }
 
-  public getTargetDir(): FileNode | null {
+  public getTargetDir(args: string[]): FileNode | null {
+    this.parse(args);
+
     try {
       this.travelToDir();
       return this.options.intermediateDirRef;
@@ -77,7 +79,9 @@ export class cd extends exec {
     }
   }
 
-  run(): commandOutput {
+  run(args: string[]): commandOutput {
+    this.parse(args);
+
     if (!this.options.targetDir) {
       return new commandOutput(
         ExitCode.EXIT_FAILURE,

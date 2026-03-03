@@ -7,7 +7,7 @@ export abstract class exec {
   setTerminalContext(context: TerminalContext): void {
     this.context = context;
   }
-  abstract parse(args: string[]): void;
-  abstract run(): commandOutput;
+  protected abstract parse(args: string[]): void;
+  abstract run(args: string[]): commandOutput;
   abstract man(): string;
 }

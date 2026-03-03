@@ -19,7 +19,7 @@ const mkdirOptionsDefault: MkdirOptions = {
 export class mkdir extends exec {
   options: MkdirOptions = mkdirOptionsDefault;
 
-  parse(args: string[]): void {
+  protected parse(args: string[]): void {
     const opts = mri(args);
 
     this.options.target = opts._[0] || "";
@@ -29,10 +29,11 @@ export class mkdir extends exec {
     this.options.targetDirLocation = tokens.join("/");
   }
 
-  run(): commandOutput {
+  run(args: string[]): commandOutput {
+    this.parse(args);
+
     const command = new cd();
-    command.parse([this.options.targetDirLocation]);
-    const targetDir = command.getTargetDir();
+    const targetDir = command.getTargetDir([this.options.targetDirLocation]);
     if (!targetDir) {
       return new commandOutput(
         ExitCode.EXIT_FAILURE,

@@ -20,7 +20,7 @@ export class ls extends exec {
   private recursePadding = "   ";
   private treePadding = "──";
 
-  parse(args: string[]): void {
+  protected parse(args: string[]): void {
     const opt = mri(args, {
       alias: {
         l: "long",
@@ -204,7 +204,9 @@ export class ls extends exec {
     return stdout;
   }
 
-  run(): commandOutput {
+  run(args: string[]): commandOutput {
+    this.parse(args);
+
     const stdout = `${this.options.tree ? ".\n" : ""}${this.traverse(this.context.currentNodeRef)}`;
     return new commandOutput(ExitCode.EXIT_SUCCESS, stdout);
   }
