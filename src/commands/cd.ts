@@ -106,6 +106,28 @@ export class cd extends exec {
       );
     }
   }
+
+  completion(args: string[]): string[] {
+    this.parse(args);
+    if (!this.options.targetDir) {
+      return this.context.currentNodeRef.nodes
+        .filter((node) => node.type === FileNodeType.directory)
+        .map((node) => node.name);
+    }
+
+    if (!this.options.targetDir.includes("/")) {
+      return this.context.currentNodeRef.nodes
+        .filter(
+          (node) =>
+            node.type === FileNodeType.directory &&
+            node.name.startsWith(this.options.targetDir || ""),
+        )
+        .map((node) => node.name);
+    }
+
+    return [];
+  }
+
   man(): string {
     return ``;
   }

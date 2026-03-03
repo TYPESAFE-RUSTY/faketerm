@@ -204,6 +204,10 @@ export class ls extends exec {
     return stdout;
   }
 
+  completion(_args: string[]): string[] {
+    return [];
+  }
+
   run(args: string[]): commandOutput {
     this.parse(args);
 

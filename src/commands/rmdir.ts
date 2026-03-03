@@ -28,6 +28,10 @@ export class rmdir extends exec {
     this.options.targetDirLocation = tokens.join("/");
   }
 
+  completion(_args: string[]): string[] {
+    return [];
+  }
+
   run(args: string[]): commandOutput {
     this.parse(args);
 

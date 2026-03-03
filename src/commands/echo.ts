@@ -9,6 +9,10 @@ export class echo extends exec {
     this.options = mri(args)._;
   }
 
+  completion(_args: string[]): string[] {
+    return [];
+  }
+
   run(args: string[]): commandOutput {
     this.parse(args);
 
