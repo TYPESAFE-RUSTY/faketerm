@@ -94,6 +94,20 @@ export class fakeTerminal {
     this.boundedPush(this.context.commandHistory, expression);
   }
 
+  public completions(expression: string): string[] {
+    const commands = expression.trim().split("|");
+    const latestIncompleteCommand = commands.pop() || "";
+    const [exec, args] = this.getArgs(latestIncompleteCommand);
+    // check registry for the command
+    const command = this.context.commandRegistry.get(exec);
+    if (!command) {
+      return this.getRegisteredCommands().filter((command) =>
+        command.startsWith(latestIncompleteCommand),
+      );
+    }
+    return command().completion(args.split(" "));
+  }
+
   public runCommand(expression: string): commandOutput {
     this.updateHistory(expression);
     // reduce commands from the input down to individual items

@@ -6,6 +6,10 @@ export class pwd extends exec {
     // ignore any args
   }
 
+  completion(_args: string[]): string[] {
+    return [];
+  }
+
   run(args: string[]): commandOutput {
     this.parse(args);
 

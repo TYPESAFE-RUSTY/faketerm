@@ -9,5 +9,6 @@ export abstract class exec {
   }
   protected abstract parse(args: string[]): void;
   abstract run(args: string[]): commandOutput;
+  abstract completion(args: string[]): string[];
   abstract man(): string;
 }

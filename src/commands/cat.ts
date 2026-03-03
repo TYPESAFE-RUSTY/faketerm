@@ -69,6 +69,26 @@ export class cat extends exec {
     }
   }
 
+  completion(args: string[]): string[] {
+    this.parse(args);
+    // if no args passed
+    if (this.options.target === "") {
+      return this.context.currentNodeRef.nodes
+        .filter((node) => node.type === FileNodeType.file)
+        .map((node) => `${node.name || ""}.${node.ext || ""}`);
+    }
+
+    // no directory was given
+    if (this.options.targetDirPath === "") {
+      return this.context.currentNodeRef.nodes
+        .filter((node) => node.type === FileNodeType.file) // get all the files from current directory
+        .map((node) => `${node.name || ""}.${node.ext || ""}`)
+        .filter((filename) => filename.startsWith(this.options.targetFileName)); // filter for files starting with input
+    }
+
+    return [];
+  }
+
   man(): string {
     return `
 NAME

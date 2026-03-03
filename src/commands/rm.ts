@@ -34,6 +34,10 @@ export class rm extends exec {
     this.options.targetFileDir = tokens.join("/");
   }
 
+  completion(_args: string[]): string[] {
+    return [];
+  }
+
   run(args: string[]): commandOutput {
     this.parse(args);
 

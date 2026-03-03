@@ -13,7 +13,14 @@ export class man extends exec {
     this.parse(args);
 
     const command = this.context.commandRegistry.get(this.options);
-    const manEntry = command?.man();
+    if (!command) {
+      return new commandOutput(
+        ExitCode.EXIT_FAILURE,
+        null,
+        `man : no such command ${this.options}`,
+      );
+    }
+    const manEntry = command().man();
     if (manEntry === "")
       return new commandOutput(
         ExitCode.EXIT_SUCCESS,
@@ -21,6 +28,15 @@ export class man extends exec {
       );
 
     return new commandOutput(ExitCode.EXIT_SUCCESS, manEntry);
+  }
+
+  completion(args: string[]): string[] {
+    this.parse(args);
+
+    return this.context.commandRegistry
+      .keys()
+      .toArray()
+      .filter((command) => command.startsWith(this.options));
   }
 
   man(): string {

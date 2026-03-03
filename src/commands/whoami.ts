@@ -6,6 +6,10 @@ export class whoami extends exec {
     // ignore any  args
   }
 
+  completion(_args: string[]): string[] {
+    return [];
+  }
+
   run(args: string[]): commandOutput {
     this.parse(args);
     return new commandOutput(ExitCode.EXIT_SUCCESS, this.context.currentUser);
