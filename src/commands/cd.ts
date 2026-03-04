@@ -129,6 +129,18 @@ export class cd extends exec {
   }
 
   man(): string {
-    return ``;
+    return `
+NAME
+      cd - change directory
+
+SYNOPSIS
+      cd [FILE]
+
+DESCRIPTION
+      cd changes the currentWorkingDirectory.
+
+AUTHOR
+      Written by TypesafeRusty.
+    `;
   }
 }

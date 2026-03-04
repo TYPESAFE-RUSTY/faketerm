@@ -95,7 +95,7 @@ NAME
       cat - concatenate files and print on the standard output
 
 SYNOPSIS
-      ls [FILE]
+      cat [FILE]
 
 DESCRIPTION
       Concatenate FILE(s) to standard output.
